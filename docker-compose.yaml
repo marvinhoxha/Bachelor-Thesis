@@ -1,0 +1,27 @@
+version: "3.9"
+
+services:
+  tfserve:
+    image: tensorflow/serving
+    ports:
+      - 8501:8501
+    environment:
+      MODEL_NAME: Effusion_model_resnet,Effusion_model_densenet,Effusion_model_vgg,Effusion_model_inception,Effusion_model_self,Cardiomegaly_model_resnet,Cardiomegaly_model_densenet,Cardiomegaly_model_vgg,Cardiomegaly_model_inception,Cardiomegaly_model_self
+    volumes:
+      - ./models:/models
+    command: --model_config_file=/models/models.config
+    depends_on:
+      - streamlit-tfserve
+
+  streamlit-tfserve:
+    build:
+      context: .
+      dockerfile: Dockerfile.streamlit
+      args:
+        CONFIG: TENSORFLOW
+        ENV: COMPOSE
+    image: streamlit:minikube
+    ports:
+      - 8502:8502
+    volumes:
+      - ./models:/app/models

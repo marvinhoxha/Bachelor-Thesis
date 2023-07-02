@@ -1,0 +1,10 @@
+#!/usr/bin/env fish
+python train_model_densenet.py 
+sleep 20
+python train_model_inception.py 
+sleep 20
+python train_model_ResNet.py 
+sleep 20
+python train_model_self.py 
+sleep 20
+python train_model_vgg.py                   
